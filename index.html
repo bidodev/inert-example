@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dialog + inert demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- Demo card -->
+  <div class="card">
+    <div class="lbl">Live demo</div>
+    <div class="sec-title"><code>&lt;dialog&gt;</code> + <code>inert</code></div>
+    <div class="sub">Open the dialog — the page behind it becomes <code>inert</code>. Close it and full interactivity returns.</div>
+
+    <button class="open-btn" id="openBtn" onclick="openDialog()">Open dialog</button>
+
+    <div class="status-row">
+      <span class="tag tag-dialog" id="dialogTag">dialog: closed</span>
+      <span class="tag tag-active"  id="pageTag">page: interactive</span>
+    </div>
+
+    <div class="stage">
+      <div class="inert-stripe" id="stripe"></div>
+      <div class="page-badge"  id="pageBadge"><span class="tag tag-inert">inert</span></div>
+
+      <div class="page-bg" id="pageContent">
+        <div class="page-section">
+          <div class="page-section-label">Settings panel</div>
+          <span class="fake-btn">Save</span>
+          <span class="fake-btn">Reset</span>
+          <input class="fake-input" placeholder="Username..." />
+        </div>
+        <div class="page-section">
+          <div class="page-section-label">Navigation</div>
+          <span class="fake-btn">Home</span>
+          <span class="fake-btn">Profile</span>
+          <span class="fake-btn">Logout</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block" id="codeBlock"><span class="hl">&lt;dialog</span> <span class="attr">id</span>=<span class="val">"modal"</span><span class="hl">&gt;</span>
+  <span class="cm">&lt;!-- dialog content --&gt;</span>
+<span class="hl">&lt;/dialog&gt;</span>
+
+<span class="hl">&lt;main</span> <span class="attr">id</span>=<span class="val">"page"</span><span class="hl">&gt;</span>
+  <span class="cm">&lt;!-- page content --&gt;</span>
+<span class="hl">&lt;/main&gt;</span>
+
+<span class="hl">&lt;script&gt;</span>
+  modal.<span class="attr">showModal</span>();
+  page.<span class="attr">inert</span> = <span class="val">true</span>;  <span class="cm">← page frozen</span>
+<span class="hl">&lt;/script&gt;</span></div>
+  </div>
+
+  <!-- Why card -->
+  <div class="card">
+    <div class="lbl">Why this combination</div>
+    <div class="how-grid">
+      <div class="how-item">
+        <div class="how-item-title"><code>&lt;dialog&gt;</code> alone</div>
+        <div class="how-item-body">Handles the modal — renders above content, manages the backdrop, supports <code>showModal()</code> / <code>close()</code> natively.</div>
+      </div>
+      <div class="how-item">
+        <div class="how-item-title"><code>inert</code> alone</div>
+        <div class="how-item-body">Freezes any element's subtree — no clicks, no tab navigation, screen readers skip it. One attribute, zero JS event soup.</div>
+      </div>
+      <div class="how-item">
+        <div class="how-item-title">Together</div>
+        <div class="how-item-body">Dialog gets all focus. Page behind becomes completely unreachable. Keyboard, pointer, and assistive tech all agree.</div>
+      </div>
+      <div class="how-item">
+        <div class="how-item-title">vs. old patterns</div>
+        <div class="how-item-body">No <code>pointer-events: none</code> hacks, no manual focus traps, no aria-hidden juggling. Native, accessible, ~94% browser support.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- The real <dialog> element -->
+<dialog id="modal">
+  <div class="modal-title">Delete account?</div>
+  <div class="modal-body">This action cannot be undone. All your data will be permanently removed.</div>
+  <div class="modal-actions">
+    <button class="modal-cancel" onclick="closeDialog()">Cancel</button>
+    <button class="modal-confirm" onclick="closeDialog()">Delete</button>
+  </div>
+</dialog>
+
+<script src="script.js"></script>
+
+</body>
+</html>
