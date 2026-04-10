@@ -81,6 +81,19 @@
     </div>
   </div>
 
+  <!-- FAQ card -->
+  <div class="card">
+    <div class="lbl">FAQ</div>
+    <div class="faq">
+      <details class="faq-item" open>
+        <summary class="faq-q">Does <code>inert</code> block scrolling?</summary>
+        <div class="faq-a">
+          <strong>No — <code>inert</code> does not block scrolling.</strong> It blocks clicks, focus, tabbing, text selection, find-in-page, and screen readers — but wheel and touch scroll still work on an inert subtree. If you need to freeze scroll too, add <code>overflow: hidden</code> separately (for example on <code>&lt;body&gt;</code> while the modal is open).
+        </div>
+      </details>
+    </div>
+  </div>
+
 </div>
 
 <!-- The real <dialog> element -->
