@@ -91,6 +91,20 @@
           <strong>No — <code>inert</code> does not block scrolling.</strong> It blocks clicks, focus, tabbing, text selection, find-in-page, and screen readers — but wheel and touch scroll still work on an inert subtree. If you need to freeze scroll too, add <code>overflow: hidden</code> separately (for example on <code>&lt;body&gt;</code> while the modal is open).
         </div>
       </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">Doesn't <code>showModal()</code> already do this automatically?</summary>
+        <div class="faq-a">
+          <strong>Yes — for <code>&lt;dialog&gt;</code> + <code>showModal()</code>, setting <code>inert</code> on the background is redundant.</strong> The browser puts the dialog in the top layer and automatically blocks interaction, focus, and assistive tech access to everything outside it. In this demo, we set <code>inert</code> explicitly just to <em>visualize</em> what's happening.
+          <br /><br />
+          Where <code>inert</code> is genuinely useful on its own:
+          <ul style="margin: .4rem 0 0 1.1rem;">
+            <li><code>dialog.show()</code> (non-modal) — doesn't block the background, so you'd add <code>inert</code> manually.</li>
+            <li>Custom modals not built on <code>&lt;dialog&gt;</code> (e.g. a <code>&lt;div&gt;</code> overlay).</li>
+            <li>Non-modal cases: disabling a panel during loading, freezing a form section, offscreen slide-out menus.</li>
+          </ul>
+        </div>
+      </details>
     </div>
   </div>
 
