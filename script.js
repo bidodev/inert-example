@@ -47,3 +47,28 @@ function closeDialog() {
   page.<span class="attr">inert</span> = <span class="val">true</span>;  <span class="cm">← page frozen</span>
 <span class="hl">&lt;/script&gt;</span>`;
 }
+
+// --- Side panel demo ---
+const sidePanel        = document.getElementById('sidePanel');
+const panelPageContent = document.getElementById('panelPageContent');
+const panelBtn         = document.getElementById('panelBtn');
+const panelStateTag    = document.getElementById('panelStateTag');
+const panelInertTag    = document.getElementById('panelInertTag');
+const panelPageTag     = document.getElementById('panelPageTag');
+
+function togglePanel() {
+  const isOpen = !sidePanel.classList.contains('open');
+  sidePanel.classList.toggle('open', isOpen);
+  sidePanel.inert = !isOpen;
+  panelPageContent.inert = isOpen;
+
+  panelBtn.textContent = isOpen ? 'Close panel' : 'Open panel';
+
+  panelStateTag.textContent = isOpen ? 'panel: open' : 'panel: closed';
+
+  panelInertTag.textContent = isOpen ? 'panel: interactive' : 'panel: inert';
+  panelInertTag.className = isOpen ? 'tag tag-active' : 'tag tag-inert';
+
+  panelPageTag.textContent = isOpen ? 'page: inert' : 'page: interactive';
+  panelPageTag.className = isOpen ? 'tag tag-inert' : 'tag tag-active';
+}

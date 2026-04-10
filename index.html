@@ -81,6 +81,69 @@
     </div>
   </div>
 
+  <!-- Side panel demo card -->
+  <div class="card">
+    <div class="lbl">Second demo</div>
+    <div class="sec-title">Side panel + <code>inert</code></div>
+    <div class="sub">A more practical use case. <code>&lt;dialog&gt;</code> doesn't fit here — side panels need custom slide animations and edge positioning. <code>inert</code> covers both states: the background when the panel is open, and the panel itself when it's closed (to keep hidden content out of the tab order).</div>
+
+    <button class="open-btn" id="panelBtn" onclick="togglePanel()">Open panel</button>
+
+    <div class="status-row">
+      <span class="tag tag-dialog" id="panelStateTag">panel: closed</span>
+      <span class="tag tag-inert"  id="panelInertTag">panel: inert</span>
+      <span class="tag tag-active" id="panelPageTag">page: interactive</span>
+    </div>
+
+    <div class="stage panel-stage">
+      <div class="stage-hint">try clicking or tabbing →</div>
+
+      <div class="page-bg" id="panelPageContent">
+        <div class="page-section">
+          <div class="page-section-label">Dashboard</div>
+          <span class="fake-btn">New</span>
+          <span class="fake-btn">Import</span>
+          <span class="fake-btn">Export</span>
+        </div>
+        <div class="page-section">
+          <div class="page-section-label">Filters</div>
+          <input class="fake-input" placeholder="Search..." />
+          <span class="fake-btn">Apply</span>
+          <span class="fake-btn">Clear</span>
+        </div>
+      </div>
+
+      <aside class="side-panel" id="sidePanel" inert>
+        <div class="side-panel-title">Settings</div>
+        <div class="side-panel-body">
+          <label class="side-panel-row">
+            <span>Dark mode</span>
+            <input type="checkbox" />
+          </label>
+          <label class="side-panel-row">
+            <span>Notifications</span>
+            <input type="checkbox" checked />
+          </label>
+          <label class="side-panel-row">
+            <span>Auto-save</span>
+            <input type="checkbox" checked />
+          </label>
+        </div>
+        <button class="side-panel-close" onclick="togglePanel()">Close panel</button>
+      </aside>
+    </div>
+
+    <div class="code-block"><span class="cm">// when opening</span>
+panel.<span class="attr">classList</span>.add(<span class="val">'open'</span>);
+panel.<span class="attr">inert</span> = <span class="val">false</span>;   <span class="cm">← panel becomes reachable</span>
+main.<span class="attr">inert</span>  = <span class="val">true</span>;    <span class="cm">← background frozen</span>
+
+<span class="cm">// when closing</span>
+panel.<span class="attr">classList</span>.remove(<span class="val">'open'</span>);
+panel.<span class="attr">inert</span> = <span class="val">true</span>;    <span class="cm">← hidden panel out of tab order</span>
+main.<span class="attr">inert</span>  = <span class="val">false</span>;</div>
+  </div>
+
   <!-- FAQ card -->
   <div class="card">
     <div class="lbl">FAQ</div>
@@ -103,6 +166,19 @@
             <li>Custom modals not built on <code>&lt;dialog&gt;</code> (e.g. a <code>&lt;div&gt;</code> overlay).</li>
             <li>Non-modal cases: disabling a panel during loading, freezing a form section, offscreen slide-out menus.</li>
           </ul>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-q">Is <code>inert</code> useful for side panels?</summary>
+        <div class="faq-a">
+          <strong>Yes — arguably a better fit than the dialog case.</strong> Most drawers and side panels aren't built with <code>&lt;dialog&gt;</code> because they need custom slide-in animations and edge-anchored positioning, so they don't get the top-layer free ride. There are two scenarios worth handling:
+          <br /><br />
+          <strong>1. Panel open — freeze the background.</strong> Set <code>inert</code> on the main content while the panel is open. No clicks or tabbing leak through, and screen readers skip the frozen area.
+          <br /><br />
+          <strong>2. Panel closed — mark the panel itself inert.</strong> A common a11y bug: a panel slid off-screen via <code>transform: translateX(100%)</code> is visually hidden but still in the tab order, so keyboard users can tab into invisible content and get stuck. <code>display: none</code> and <code>visibility: hidden</code> also remove elements from the tab order, but they kill your slide-out transition. <code>inert</code> lets you keep the animation <em>and</em> stay accessible.
+          <br /><br />
+          See the second demo above — toggling the panel flips <code>inert</code> on both the background and the panel.
         </div>
       </details>
     </div>
